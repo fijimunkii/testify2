@@ -1,0 +1,26 @@
+{
+  "name": "testify2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fijimunkii/testify2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fijimunkii/testify2/issues"
+  },
+  "homepage": "https://github.com/fijimunkii/testify2#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "hpp": "^0.2.2",
+    "nconf": "^0.10.0",
+    "serve-index": "^1.9.1"
+  }
+}
