@@ -1,5 +1,4 @@
 process.setMaxListeners(0);
-const env = require('./env');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -11,7 +10,8 @@ app.use(require('hpp')());
 
 app.use('/testify', require('./testify'));
 
-app.use('/logs', require('./logs'));
+app.use('/logs', require('./lib/logs'));
 
-var port = env.get('PORT')||5555;
-app.listen(port, () => console.log('http://localhost:'+port));
+const env = require('./lib/env');
+const port = env.get('PORT')||5555;
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
