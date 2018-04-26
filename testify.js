@@ -1,5 +1,6 @@
 const path = require('path');
 const env = require('./lib/env');
+const os = require('os');
 const handleError = require('./lib/handle-error');
 const sendMessage = require('./lib/send-message');
 const sendStatus = require('./lib/send-status');
@@ -23,7 +24,7 @@ async function testify(req) {
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
   const targetUrl = decodeURIComponent(req.query.target);
   const key = [req.query.username,req.query.reponame,branchname,targetUrl].join('/');
-  const logDir = path.join('/root/logs/', key);
+  const logDir = path.join(os.tmpdir(), key);
   const logUrl = `https://${env.get('hostname')}/logs/${key}/test.log`;
   req.query.logUrl = logUrl; // store in req for error handler
   const artifacts = await getArtifacts({
