@@ -16,7 +16,7 @@ test:
 
 deployment:
   hub:
-    branch: master
+    branch: first-cut
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker tag $DOCKER_IMAGE:$DOCKER_TAG $DOCKER_IMAGE:latest
