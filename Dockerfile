@@ -4,7 +4,9 @@ MAINTAINER Harrison Powers, harrisonpowers@gmail.com
 
 RUN apt-get update && apt-get install -qq -y python-pip libpython-dev \
   && curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py \
-  && pip install -q awscli --upgrade
+  && pip install -q awscli --upgrade \
+  && curl -fsSL https://get.docker.com/ | sh \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD . /root
 
