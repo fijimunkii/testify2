@@ -8,4 +8,5 @@ WORKDIR /root
 
 RUN npm i && npm i -g pm2
 
-CMD pm2 start index.js --name testify --no-daemon
+CMD bash sync_config.sh \
+  && pm2 start index.js --name testify --no-daemon
