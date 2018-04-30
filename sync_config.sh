@@ -9,5 +9,5 @@ if [ -z ${S3_BUCKET+x} ]; then
 else
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   aws s3 sync s3://$S3_BUCKET/cert $DIR/cert >/dev/null 2>&1 || echo "cert sync failed"
-  aws s3 sync s3://$S3_BUCKET/config.json $DIR/config.json >/dev/null 2>&1 || echo "config sync failed"
+  aws s3 cp s3://$S3_BUCKET/config.json $DIR/config.json >/dev/null 2>&1 || echo "config sync failed"
 fi
