@@ -11,12 +11,12 @@ const runTestCypress = require('./lib/run-test-cypress');
 
 module.exports = (req, res) => {
   return sendMessage(`Testifying ${req.query.target}`)
-    .then(() => testify(req))
+    .then(() => testify(req,res))
     .then(() => sendMessage(`Testified ${req.query.target}`))
     .catch(err => handleError(err,req,res));
 };
 
-async function testify(req) {
+async function testify(req, res) {
   ['username','reponame','branchname','target'].forEach(d => {
     if (!req.query[d])
       throw 'Missing query parameter: ' + d;
