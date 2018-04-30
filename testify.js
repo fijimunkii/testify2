@@ -20,7 +20,8 @@ async function testify(req) {
   ['username','reponame','branchname','target'].forEach(d => {
     if (!req.query[d])
       throw 'Missing query parameter: ' + d;
-  }); 
+  });
+  if (req.query.quick) res.end('OK');
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
   const targetUrl = decodeURIComponent(req.query.target);
   const key = [req.query.username,req.query.reponame,branchname,targetUrl].join('/');
