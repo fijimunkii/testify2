@@ -6,7 +6,8 @@ docker run -d \
   -v /tmp:/tmp \
   fijimunkii/testify2:latest
 
-curl http://localhost:80/testify\?username\=fijimunkii\&reponame\=myapp\&branchname\=master\&target\=myapp.com
+curl http://localhost:80/testify\
+  \?username=fijimunkii\&reponame=myapp\&branchname=master\&target=myapp.com
 ```
 
 # TODO
