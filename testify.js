@@ -75,5 +75,6 @@ async function testify(req, res) {
       description: 'Testified ' + targetUrl,
       targetUrl: logUrl
     });
-  res.status(200).send('OK');
+  res.write('OK');
+  res.end();
 };
