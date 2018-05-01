@@ -51,18 +51,22 @@ async function testify(req, res) {
       rev: rev,
       targetUrl: targetUrl
     });
+  res.send('Rev is OK');
   await runTestIntegrity({
       username: req.query.username,
       reponame: req.query.reponame,
       targetUrl: targetUrl
     });
+  res.send('Integrity is OK');
   await runTestCypress({
       username: req.query.username,
       reponame: req.query.reponame,
       targetUrl: targetUrl,
       logdir: logDir,
-      artifactUrl: artifactUrl
+      artifactUrl: artifactUrl,
+      res: res
     });
+  res.send('Cypress is OK');
   await sendStatus({
       username: req.query.username,
       reponame: req.query.reponame,
