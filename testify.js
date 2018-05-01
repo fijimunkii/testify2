@@ -63,4 +63,13 @@ async function testify(req, res) {
       logdir: logDir,
       artifactUrl: artifactUrl
     });
+  await sendStatus({
+      username: req.query.username,
+      reponame: req.query.reponame,
+      rev: rev,
+      state: 'success',
+      description: 'Testified ' + targetUrl,
+      targetUrl: logUrl
+    });
+  res.end('OK');
 };
