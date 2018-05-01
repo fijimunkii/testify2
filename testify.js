@@ -21,7 +21,7 @@ async function testify(req, res) {
     if (!req.query[d])
       throw 'Missing query parameter: ' + d;
   });
-  if (req.query.quick) res.end('OK');
+  if (req.query.quick) res.status(200).send('OK');
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
   const targetUrl = decodeURIComponent(req.query.target);
   const key = [req.query.username,req.query.reponame,branchname,targetUrl].join('/');
@@ -51,13 +51,13 @@ async function testify(req, res) {
       rev: rev,
       targetUrl: targetUrl
     });
-  res.send('Rev is OK');
+  res.write('Rev is OK');
   await runTestIntegrity({
       username: req.query.username,
       reponame: req.query.reponame,
       targetUrl: targetUrl
     });
-  res.send('Integrity is OK');
+  res.write('Integrity is OK');
   await runTestCypress({
       username: req.query.username,
       reponame: req.query.reponame,
@@ -66,7 +66,7 @@ async function testify(req, res) {
       artifactUrl: artifactUrl,
       res: res
     });
-  res.send('Cypress is OK');
+  res.write('Cypress is OK');
   await sendStatus({
       username: req.query.username,
       reponame: req.query.reponame,
@@ -75,5 +75,5 @@ async function testify(req, res) {
       description: 'Testified ' + targetUrl,
       targetUrl: logUrl
     });
-  res.end('OK');
+  res.status(200).send('OK');
 };
