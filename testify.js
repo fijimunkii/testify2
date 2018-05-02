@@ -79,5 +79,5 @@ async function testify(req, res) {
       description: 'Testified ' + targetUrl,
       targetUrl: logUrl
     });
-  if (!req.query.quick) { res.write('OK'); res.end(); }
+  if (!req.query.quick) { res.write('OK\n'); res.end(); }
 };
