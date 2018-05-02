@@ -12,5 +12,9 @@ app.use(require('hpp')());
 app.use('/testify', require('./testify'));
 app.use('/logs', require('./lib/logs'));
 
+if (nconf.get('HTTPS')) {
+  app = require('https').createServer(require('./lib/ssl-config'), app);
+}
+
 const port = env.get('PORT')||5555;
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
