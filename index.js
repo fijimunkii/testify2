@@ -12,7 +12,7 @@ app.use(require('hpp')());
 app.use('/testify', require('./testify'));
 app.use('/logs', require('./lib/logs'));
 
-if (nconf.get('HTTPS')) {
+if (env.get('HTTPS')) {
   app = require('https').createServer(require('./lib/ssl-config'), app);
 }
 
