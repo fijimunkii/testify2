@@ -5,7 +5,7 @@ const os = require('os');
 if (!env.get('LOG_DIR')) env.set('LOG_DIR', os.tmpdir());
 
 const express = require('express');
-const app = express();
+let app = express();
 app.use(require('body-parser').json());
 app.use(require('hpp')());
 
