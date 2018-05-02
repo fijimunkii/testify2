@@ -1,6 +1,7 @@
 const path = require('path');
 const env = require('./lib/env');
 const os = require('os');
+const mkdirp = require('bluebird').Promisify(require('mkdirp'));
 const handleError = require('./lib/handle-error');
 const sendMessage = require('./lib/send-message');
 const sendStatus = require('./lib/send-status');
@@ -28,6 +29,7 @@ async function testify(req, res) {
   const time = ((d=new Date())&&d.setHours(d.getHours()-4)&&d).toISOString().slice(0,19).replace(/[:]/g,'');
   const key = [req.query.username,req.query.reponame,branchname,time].join('/');
   const logDir = path.join(env.get('LOG_DIR'), key);
+  await mkdirp(logDir);
   const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/test.log`;
   req.query.logUrl = logUrl; // store in req for error handler
   const artifacts = await getArtifacts({
