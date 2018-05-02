@@ -2,6 +2,7 @@
 docker run -d \
   -p 80:5555 \
   -e S3_BUCKET=testify-myapp \
+  -e hostname=testify.myapp.com \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /tmp:/tmp \
   fijimunkii/testify2:latest
