@@ -24,7 +24,9 @@ async function testify(req, res) {
   if (req.query.quick) { res.status(200).send('OK'); }
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
   const targetUrl = decodeURIComponent(req.query.target);
-  const key = [req.query.username,req.query.reponame,branchname,(new Date()).toISOString().substring(0,10)].join('/');
+  let d;
+  const time = ((d=new Date())&&d.setHours(d.getHours()-4)&&d).toISOString().slice(0,19).replace(/[:]/g,'');
+  const key = [req.query.username,req.query.reponame,branchname,time].join('/');
   const logDir = path.join(env.get('LOG_DIR'), key);
   const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/test.log`;
   req.query.logUrl = logUrl; // store in req for error handler
