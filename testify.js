@@ -26,7 +26,7 @@ async function testify(req, res) {
   const targetUrl = decodeURIComponent(req.query.target);
   const key = [req.query.username,req.query.reponame,branchname,(new Date()).toISOString().substring(0,10)].join('/');
   const logDir = path.join(env.get('LOG_DIR'), key);
-  const logUrl = `https://${env.get('hostname')}/logs/${key}/test.log`;
+  const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/test.log`;
   req.query.logUrl = logUrl; // store in req for error handler
   const artifacts = await getArtifacts({
       username: req.query.username,
