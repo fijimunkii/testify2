@@ -31,7 +31,7 @@ async function testify(req, res) {
   const logDir = path.join(env.get('LOG_DIR'), key);
   req.query.logDir = logDir; // store in req for error handler //TODO refactor
   await mkdirp(logDir);
-  const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/test.log`;
+  const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/`;
   req.query.logUrl = logUrl; // store in req for error handler
   const artifacts = await getArtifacts({
       username: req.query.username,
