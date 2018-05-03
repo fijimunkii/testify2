@@ -72,6 +72,7 @@ async function testify(req, res) {
       targetUrl: targetUrl,
       logDir: logDir,
       artifactUrl: artifactUrl,
+      req: req,
       res: res
     });
   if (!req.query.quick) { res.write('Cypress is OK\n'); res.flush(); }
