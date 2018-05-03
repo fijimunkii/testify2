@@ -29,6 +29,7 @@ async function testify(req, res) {
   const time = ((d=new Date())&&d.setHours(d.getHours()-4)&&d).toISOString().slice(0,19).replace(/[:]/g,'');
   const key = [req.query.username,req.query.reponame,branchname,time].join('/');
   const logDir = path.join(env.get('LOG_DIR'), key);
+  req.query.logDir = logDir; // store in req for error handler //TODO refactor
   await mkdirp(logDir);
   const logUrl = `http${env.get('HTTPS')?'s':''}://${env.get('hostname')}/logs/${key}/test.log`;
   req.query.logUrl = logUrl; // store in req for error handler
@@ -69,7 +70,7 @@ async function testify(req, res) {
       username: req.query.username,
       reponame: req.query.reponame,
       targetUrl: targetUrl,
-      logdir: logDir,
+      logDir: logDir,
       artifactUrl: artifactUrl,
       res: res
     });
