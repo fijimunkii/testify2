@@ -21,8 +21,8 @@ async function testify(req, res) {
   ['username','reponame','branchname','target'].forEach(d => {
     if (!req.query[d])
       throw `Missing query parameter: ${d}`;
-    if (/[^\w\d\-\.]/.test(req.query[d]))
-      throw `Invalid characters in query: ${d} - Only [^\w\d\-\.] allowed`;
+    if (/[^\w\-\.]/.test(req.query[d]))
+      throw `Invalid characters in query: ${d} - Only [^\w\-\.] allowed`;
   });
   if (req.query.quick) { res.status(200).send('OK'); }
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
