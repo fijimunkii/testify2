@@ -20,7 +20,9 @@ module.exports = (req, res) => {
 async function testify(req, res) {
   ['username','reponame','branchname','target'].forEach(d => {
     if (!req.query[d])
-      throw 'Missing query parameter: ' + d;
+      throw `Missing query parameter: ${d}`;
+    if (/[^A-z\-\.]/.test(req.query[d]))
+      throw `Invalid characters in query: ${d} - Only [^A-z\-\.] allowed`;
   });
   if (req.query.quick) { res.status(200).send('OK'); }
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
