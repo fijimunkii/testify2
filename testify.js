@@ -65,7 +65,8 @@ async function testify(req, res) {
       username: req.query.username,
       reponame: req.query.reponame,
       targetUrl: targetUrl,
-      data: req.query.data
+      data: req.query.data,
+      external: req.query.external
     });
   if (!req.query.quick) { res.write('Integrity is OK\n'); res.flush(); }
 
