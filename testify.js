@@ -49,7 +49,7 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       rev: rev,
       state: 'pending',
-      description: 'Testifying ' + targetUrl,
+      description: `Testifying ${req.query.external?'external':''} ${targetUrl}`,
       targetUrl: logUrl
     });
 
@@ -86,7 +86,7 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       rev: rev,
       state: 'success',
-      description: 'Testified ' + targetUrl,
+      description: `Testified ${req.query.external?'external':''} ${targetUrl}`,
       targetUrl: logUrl
     });
   if (!req.query.quick) { res.write('OK\n'); res.end(); }
