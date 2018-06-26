@@ -11,9 +11,9 @@ const runTestIntegrity = require('./lib/run-test-integrity');
 const runTestCypress = require('./lib/run-test-cypress');
 
 module.exports = (req, res) => {
-  return sendMessage(`Testifying ${req.query.target}`)
+  return sendMessage(`Testifying ${req.query.external?'external data on ':''}${req.query.target}`)
     .then(() => testify(req,res))
-    .then(() => sendMessage(`Testified ${req.query.target}`))
+    .then(() => sendMessage(`Testified ${req.query.external?'external data on ':''}${req.query.target}`))
     .catch(err => handleError(err,req,res));
 };
 
@@ -49,7 +49,7 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       rev: rev,
       state: 'pending',
-      description: `Testifying ${req.query.external?'external':''} ${targetUrl}`,
+      description: `Testifying ${req.query.external?'external data on ':''}${targetUrl}`,
       targetUrl: logUrl
     });
 
@@ -85,7 +85,7 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       rev: rev,
       state: 'success',
-      description: `Testified ${req.query.external?'external':''} ${targetUrl}`,
+      description: `Testified ${req.query.external?'external data on ':''} ${targetUrl}`,
       targetUrl: logUrl
     });
   if (!req.query.quick) { res.write('OK\n'); res.end(); }
