@@ -18,10 +18,14 @@ module.exports = (req, res) => {
 };
 
 async function testify(req, res) {
+  // required input
   ['username','reponame','branchname','target'].forEach(d => {
     if (!req.query[d])
-      throw `Missing query parameter: ${d}`;
-    if (/[^\w\-\.]/.test(req.query[d]))
+      throw `Missing required query parameter: ${d}`;
+  });
+  // validate all input
+  ['username','reponame','branchname','target','skip','external'].forEach(d => {
+    if (req.query[d] && /[^\w\-\.]/.test(req.query[d]))
       throw `Invalid characters in query: ${d} - Only [^\w\-\.] allowed`;
   });
   if (req.query.quick) { res.status(200).send('OK'); }
@@ -75,6 +79,7 @@ async function testify(req, res) {
       targetUrl: targetUrl,
       logDir: logDir,
       artifactUrl: artifactUrl,
+      skip: req.query.skip,
       req: req,
       res: res
     });
