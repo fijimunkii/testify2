@@ -10,6 +10,3 @@ docker run -d \
 curl http://localhost:80/testify\
   \?username=fijimunkii\&reponame=myapp\&branchname=master\&target=myapp.com
 ```
-
-# TODO
-- sanitize input
