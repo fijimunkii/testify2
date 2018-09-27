@@ -21,6 +21,7 @@
     "body-parser": "^1.18.2",
     "circleci": "^0.3.3",
     "express": "^4.16.3",
+    "fs-extra": "^7.0.0",
     "hpp": "^0.2.2",
     "mkdirp": "^0.5.1",
     "nconf": "^0.10.0",
