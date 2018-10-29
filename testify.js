@@ -9,6 +9,7 @@ const getArtifacts = require('./lib/get-artifacts');
 const runTestRev = require('./lib/run-test-rev');
 const runTestIntegrity = require('./lib/run-test-integrity');
 const runTestCypress = require('./lib/run-test-cypress');
+const Promise = require('bluebird');
 
 module.exports = (req, res) => {
   return sendMessage(`Testifying ${req.query.external?'external data on ':''}${req.query.target}`)
@@ -56,6 +57,9 @@ async function testify(req, res) {
       description: `Testifying ${req.query.external?'external data on ':''}${targetUrl}`,
       targetUrl: logUrl
     });
+
+  // avoid race condition - TODO maybe add retries
+  await Promise.delay(1000*5);
 
   await runTestRev({
       username: req.query.username,
