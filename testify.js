@@ -59,7 +59,7 @@ async function testify(req, res) {
     });
 
   // avoid race condition - TODO maybe add retries
-  await Promise.delay(1000*5);
+  await Promise.delay(1000*10);
 
   await runTestRev({
       username: req.query.username,
