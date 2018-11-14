@@ -49,6 +49,7 @@ async function testify(req, res) {
   const artifactUrl = artifact.url;
   const rev = artifact.sha;
   req.query.rev = rev; // store in req for error handler
+
   await sendStatus({
       username: req.query.username,
       reponame: req.query.reponame,
@@ -56,7 +57,8 @@ async function testify(req, res) {
       state: 'pending',
       description: `Testifying ${req.query.external?'external data on ':''}${targetUrl}`,
       targetUrl: logUrl
-    });
+    })
+    .catch(err => {  throw `SEND_STATUS_FAILED ${err}`; });
 
   // avoid race condition - TODO maybe add retries
   await Promise.delay(1000*10);
@@ -66,7 +68,8 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       rev: rev,
       targetUrl: targetUrl
-    });
+    })
+    .catch(err => { throw `REV_CHECK_FAILED ${err}`; });
   if (!req.query.quick) { res.write('Rev is OK\n'); res.flush(); }
 
   await runTestIntegrity({
@@ -74,7 +77,8 @@ async function testify(req, res) {
       reponame: req.query.reponame,
       targetUrl: targetUrl,
       external: req.query.external
-    });
+    })
+    .catch(err => { throw `INTEGRITY_CHECK_FAILED ${err}`; });
   if (!req.query.quick) { res.write('Integrity is OK\n'); res.flush(); }
 
   await runTestCypress({
@@ -86,7 +90,8 @@ async function testify(req, res) {
       skip: req.query.skip,
       req: req,
       res: res
-    });
+    })
+    .catch(err => { throw `CYPRESS_CHECK_FAILED ${err}`; });
   if (!req.query.quick) { res.write('Cypress is OK\n'); res.flush(); }
 
   await sendStatus({
@@ -96,6 +101,7 @@ async function testify(req, res) {
       state: 'success',
       description: `Testified ${req.query.external?'external data on ':''} ${targetUrl}`,
       targetUrl: logUrl
-    });
+    })
+    .catch(err => {  throw `SEND_STATUS_FAILED ${err}`; });
   if (!req.query.quick) { res.write('OK\n'); res.end(); }
 };
