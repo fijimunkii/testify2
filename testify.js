@@ -6,6 +6,7 @@ const handleError = require('./lib/handle-error');
 const sendMessage = require('./lib/send-message');
 const sendStatus = require('./lib/send-status');
 const getArtifacts = require('./lib/get-artifacts');
+const runTestReady = require('./lib/run-test-ready');
 const runTestRev = require('./lib/run-test-rev');
 const runTestIntegrity = require('./lib/run-test-integrity');
 const runTestCypress = require('./lib/run-test-cypress');
@@ -60,8 +61,12 @@ async function testify(req, res) {
     })
     .catch(err => {  throw `SEND_STATUS_FAILED ${err}`; });
 
-  // avoid race condition - TODO maybe add retries
-  await Promise.delay(1000*10);
+  await runTestReady({
+      username: req.query.username,
+      reponame: req.query.reponame,
+      targetUrl: targetUrl
+    })
+    .catch(err => { throw `READY_CHECK_FAILED ${err}`; });
 
   await runTestRev({
       username: req.query.username,
