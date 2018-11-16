@@ -33,8 +33,8 @@ async function testify(req, res) {
   if (req.query.quick) { res.status(200).send('OK'); }
   const branchname = String(req.query.branchname).replace(/([^\w\d\s-])/,''); 
   const targetUrl = decodeURIComponent(req.query.target);
-  let d;
-  const time = ((d=new Date())&&d.setHours(d.getHours()-4)&&d).toISOString().slice(0,19).replace(/[:]/g,'');
+  // eastern timezone url safe string
+  const time = (() => { const d=new Date(); d.setHours(d.getHours()-4); return d.toISOString().slice(0,19).replace(/[:]/g,''); })();
   const key = [req.query.username,req.query.reponame,branchname,time].join('/');
   const logDir = path.join(env.get('LOG_DIR'), key);
   req.query.logDir = logDir; // store in req for error handler //TODO refactor
