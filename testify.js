@@ -8,6 +8,7 @@ const sendStatus = require('./lib/send-status');
 const getArtifacts = require('./lib/get-artifacts');
 const runTestReady = require('./lib/run-test-ready');
 const runTestRev = require('./lib/run-test-rev');
+const runTestHttpRedir = require('./lib/run-test-http-redir');
 const runTestIntegrity = require('./lib/run-test-integrity');
 const runTestCypress = require('./lib/run-test-cypress');
 const Promise = require('bluebird');
@@ -67,6 +68,9 @@ async function testify(req, res) {
       targetUrl: targetUrl
     })
     .catch(err => { throw `READY_CHECK_FAILED ${err}`; });
+
+  await runTestHttpRedir({ targetUrl })
+    .catch(err => { throw `HTTP_REDIRECT_FAILED ${err}`; });
 
   await runTestRev({
       username: req.query.username,
